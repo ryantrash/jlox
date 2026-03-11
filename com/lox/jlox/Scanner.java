@@ -41,7 +41,6 @@ class Scanner {
 
     Scanner(String source) {
         this.source = source;
-        System.out.println(source.length());
     }
 
     /**
@@ -74,6 +73,10 @@ class Scanner {
                 addToken(LEFT_BRACE);
             case '}' ->
                 addToken(RIGHT_BRACE);
+            case '?' -> 
+                addToken(QUESTION);
+            case ':' ->
+                addToken(COLON); 
             case ',' ->
                 addToken(COMMA);
             case '.' ->
