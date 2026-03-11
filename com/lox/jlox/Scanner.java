@@ -8,6 +8,9 @@ import java.util.List;
 class Scanner {
 
     private final String source;
+    /**
+     * The List containing all raw tokens in the source code
+     */
     private final List<Token> tokens = new ArrayList<>();
 
     private int start = 0;
