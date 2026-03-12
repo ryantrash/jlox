@@ -3,6 +3,10 @@ package com.lox.jlox;
 import static com.lox.jlox.TokenType.*;
 import java.util.List;
 
+/**
+ * The parser class for Jlox. Takes a list of tokens and produces a single
+ * expression
+ */
 class Parser {
 
     private static class ParseError extends RuntimeException {
@@ -15,6 +19,12 @@ class Parser {
         this.tokens = tokens;
     }
 
+    /**
+     * Parses each token until a singular expression is generated, or a
+     * parseError is thrown.
+     *
+     * @return A singular expression representing all tokens.
+     */
     Expr parse() {
         try {
             return expression();
@@ -26,7 +36,7 @@ class Parser {
     private Expr expression() {
 
         if (match(PLUS, STAR, SLASH)) {
-            Token token = previous(); 
+            Token token = previous();
             expression();
             throw error(token, "Expect left hand binary operand");
         }
@@ -177,6 +187,10 @@ class Parser {
         return new ParseError();
     }
 
+    /**
+     * Function to synchronize the parser on reaching a syntax error.
+     */
+    @SuppressWarnings("unused")
     private void synchronize() {
         advance();
 
@@ -189,8 +203,10 @@ class Parser {
                 case CLASS, FOR, FUN, IF, PRINT, RETURN, VAR, WHILE, NUMBER, STRING -> {
                     return;
                 }
+                default -> {
+                    advance();
+                }
             }
-            advance();
         }
     }
 }
