@@ -42,4 +42,9 @@ class RpnPrinter implements Expr.Visitor<String> {
     public String visitUnaryExpr(Expr.Unary expr) {
         return expr.right.accept(this) + " " + expr.operator.lexeme; 
     }
+
+    @Override
+    public String visitTernaryExpr(Expr.Ternary expr){
+        return expr.eval.accept(this) + " " + expr.left.accept(this) + " " + expr.right.accept(this) + " IF "; 
+    }
 }

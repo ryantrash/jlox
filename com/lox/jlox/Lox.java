@@ -12,10 +12,14 @@ import java.util.List;
  * The Lox language intepreter.
  */
 public class Lox {
+    private static final Interpreter interpreter = new Interpreter(); 
+
     /**
      * Boolean to detect when an error has been raised.
      */
     static boolean hadError = false; 
+    static boolean hadRuntimeError = false;
+
     public static void main(String[] args) throws IOException{
         // Ensure only 1 or 0 files have been attached
         if(args.length > 1){
@@ -37,6 +41,7 @@ public class Lox {
         run(new String(bytes, Charset.defaultCharset())); 
 
         if(hadError) System.exit(65); 
+        if(hadRuntimeError) System.exit(70); 
     }
     /**
      * Runs Lox in the sysout
@@ -72,7 +77,7 @@ public class Lox {
 
         if(hadError) return; 
 
-        System.out.println(new AstPrinter().print(expression)); 
+        interpreter.interpret(expression);
     }
 
     /**
@@ -82,6 +87,13 @@ public class Lox {
      */
     static void error(int line, String message){
         report(line, "", message); 
+    }
+
+    static void runtimeError(RuntimeError error){
+        System.err.println(error.getMessage() +
+            "\n[line " + error.token.line +"]"
+        );
+        hadRuntimeError = true; 
     }
     
     /**

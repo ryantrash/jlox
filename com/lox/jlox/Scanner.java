@@ -108,7 +108,6 @@ class Scanner {
                 } else {
                     addToken(SLASH);
                 }
-                break;
             }
 
             case ' ', '\r', '\t' -> {
